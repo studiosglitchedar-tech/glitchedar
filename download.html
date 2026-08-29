@@ -5,11 +5,108 @@
 <meta name="description" content="Coin Master Beta 0.2 downloads and installation guide.">
 <title>Coin Master — Download & Install</title>
 <link rel="icon" href="assets/coin-master.ico"><link rel="stylesheet" href="style.css">
+<style>
+/* === GLITCHED AR visual polish === */
+:root{--bg:#030307;--panel:#07070d;--panel2:#0a0a12;--text:#f5f3fa;--muted:#a9a5b8;--p:#b83cff;--p2:#d875ff;--line:#8e2cff55}
+body{background:radial-gradient(circle at 78% 18%,#8e2cff18,transparent 34rem),#030307}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:19;opacity:.045;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.22) 4px,transparent 5px);mix-blend-mode:screen}
+.nav{background:rgba(3,3,7,.88);border-bottom-color:#8e2cff44}
+.nav nav a{position:relative}.nav nav a:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:2px;background:var(--p2);transform:scaleX(0);transform-origin:center;box-shadow:0 0 12px var(--p2);transition:.2s}.nav nav a:hover:after{transform:scaleX(1)}
+.btn{letter-spacing:1.2px;white-space:nowrap;line-height:1;min-width:0}
+.btn.primary{box-shadow:0 0 0 transparent}.btn:hover{box-shadow:0 0 28px #a83cff44}
+.platform-card,.relic-window,.game-card,.contact-card,.media-card,.download-strip,.step-card{background:linear-gradient(180deg,#090910,#05050a);border-color:#8e2cff4d;box-shadow:inset 0 0 35px #8e2cff08}
+.platform-card h3,.relic-title h3,.game-info h3{letter-spacing:.5px}
+/* Windows / Android symbols: clean vector-like CSS icons */
+.platform-card .platform-icon,.relic-platform-icon{width:42px;height:42px;display:inline-grid;place-items:center;flex:none;color:#c95cff;filter:drop-shadow(0 0 8px #b83cff55)}
+.windows-icon{display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;padding:4px}.windows-icon i{display:block;background:currentColor}
+.android-icon{position:relative}.android-icon:before{content:"";width:25px;height:20px;border-radius:7px 7px 4px 4px;background:currentColor;display:block}.android-icon:after{content:"••";position:absolute;top:12px;left:13px;color:#07070d;font-size:11px;letter-spacing:4px;line-height:1}
+.android-icon .antenna{position:absolute;top:5px;left:10px;width:8px;height:1px;background:currentColor;transform:rotate(-35deg);box-shadow:15px 6px 0 currentColor}
+.platform-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}.platform-head .eyebrow{margin:0}
+/* Fix oversized/over-spaced download labels */
+.platform-card .btn,.relic-download{font-size:10px;letter-spacing:1.1px;word-spacing:0;text-transform:none;padding-left:20px;padding-right:20px}
+/* Full-screen glitch transition: no loading bar */
+#screen-glitch{position:fixed;inset:0;z-index:2147483647;pointer-events:none;opacity:0;overflow:hidden;background:transparent}
+#screen-glitch:before,#screen-glitch:after{content:"";position:absolute;inset:-8%;opacity:0}
+#screen-glitch:before{background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(255,255,255,.15) 6px,transparent 7px),linear-gradient(90deg,transparent 0 12%,rgba(190,65,255,.16) 12.2% 12.5%,transparent 12.8% 42%,rgba(0,220,255,.14) 42.2% 42.5%,transparent 42.8% 76%,rgba(255,45,185,.15) 76.2% 76.5%,transparent 76.8%)}
+#screen-glitch:after{background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(184,60,255,.18) 23px 25px,transparent 26px 46px);mix-blend-mode:screen}
+#screen-glitch.active{animation:fullGlitch .24s steps(2,end) forwards}
+#screen-glitch.active:before{animation:glitchSlices .24s steps(2,end) forwards}
+#screen-glitch.active:after{animation:glitchNoise .24s steps(2,end) forwards}
+@keyframes fullGlitch{0%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}10%{opacity:1;transform:translate(-12px,2px);clip-path:inset(5% 0 72% 0);filter:contrast(1.8)}22%{opacity:1;transform:translate(14px,-2px);clip-path:inset(28% 0 45% 0);filter:brightness(1.5) contrast(2)}37%{opacity:1;transform:translate(-9px,4px);clip-path:inset(67% 0 16% 0);filter:contrast(2.2)}52%{opacity:.95;transform:translate(8px,-3px);clip-path:inset(13% 0 57% 0);filter:brightness(1.3)}68%{opacity:.85;transform:translate(-5px,1px);clip-path:inset(48% 0 28% 0);filter:contrast(1.8)}82%{opacity:.55;transform:translate(4px,0);clip-path:inset(80% 0 5% 0)}100%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}}
+@keyframes glitchSlices{0%{opacity:0;transform:translate(0)}18%{opacity:1;transform:translate(22px,-7px)}42%{opacity:.8;transform:translate(-26px,4px)}65%{opacity:.9;transform:translate(18px,2px)}100%{opacity:0;transform:translate(0)}}
+@keyframes glitchNoise{0%{opacity:0;transform:translate(0)}25%{opacity:.9;transform:translate(-20px,8px)}48%{opacity:.7;transform:translate(24px,-5px)}74%{opacity:.8;transform:translate(-12px,3px)}100%{opacity:0;transform:translate(0)}}
+/* Local RELICS expander glitch remains separate from full-screen transition */
+.relic-window.window-glitch,.relic-version.window-glitch{animation:relicWindowGlitch .18s steps(2,end)}
+@keyframes relicWindowGlitch{0%{transform:translateX(0);filter:none}20%{transform:translateX(-5px);filter:contrast(1.5)}40%{transform:translateX(5px);filter:contrast(1.8)}60%{transform:translateX(-3px);filter:contrast(1.3)}80%{transform:translateX(3px);filter:contrast(1.6)}100%{transform:translateX(0);filter:none}}
+@media(max-width:800px){.platform-head{align-items:flex-start}.platform-card .btn,.relic-download{font-size:9px;letter-spacing:.8px;padding-left:15px;padding-right:15px}}
+
+
+
+
+
+<style id="download-glitch-style">
+#screen-glitch{
+ position:fixed;inset:0;z-index:2147483647;pointer-events:none;
+ opacity:0;overflow:hidden;background:transparent;
+}
+#screen-glitch::before,#screen-glitch::after{
+ content:"";position:absolute;inset:-8%;opacity:0;
+}
+#screen-glitch::before{
+ background:
+ repeating-linear-gradient(0deg,transparent 0 5px,rgba(255,255,255,.16) 6px,transparent 7px),
+ linear-gradient(90deg,transparent 0 12%,rgba(190,65,255,.18) 12.2% 12.5%,
+ transparent 12.8% 42%,rgba(0,220,255,.16) 42.2% 42.5%,
+ transparent 42.8% 76%,rgba(255,45,185,.17) 76.2% 76.5%,transparent 76.8%);
+}
+#screen-glitch::after{
+ background:repeating-linear-gradient(90deg,transparent 0 22px,
+ rgba(184,60,255,.2) 23px 25px,transparent 26px 46px);
+ mix-blend-mode:screen;
+}
+#screen-glitch.active{animation:downloadScreenGlitch .26s steps(2,end) forwards}
+#screen-glitch.active::before{animation:downloadSlices .26s steps(2,end) forwards}
+#screen-glitch.active::after{animation:downloadNoise .26s steps(2,end) forwards}
+
+@keyframes downloadScreenGlitch{
+ 0%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}
+ 10%{opacity:1;transform:translate(-12px,2px);clip-path:inset(5% 0 72% 0);filter:contrast(2)}
+ 22%{opacity:1;transform:translate(14px,-2px);clip-path:inset(28% 0 45% 0);filter:brightness(1.5) contrast(2)}
+ 37%{opacity:1;transform:translate(-9px,4px);clip-path:inset(67% 0 16% 0);filter:contrast(2.2)}
+ 52%{opacity:.95;transform:translate(8px,-3px);clip-path:inset(13% 0 57% 0)}
+ 68%{opacity:.85;transform:translate(-5px,1px);clip-path:inset(48% 0 28% 0);filter:contrast(1.8)}
+ 82%{opacity:.55;transform:translate(4px,0);clip-path:inset(80% 0 5% 0)}
+ 100%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}
+}
+@keyframes downloadSlices{
+ 0%{opacity:0;transform:translate(0)}
+ 18%{opacity:1;transform:translate(22px,-7px)}
+ 42%{opacity:.8;transform:translate(-26px,4px)}
+ 65%{opacity:.9;transform:translate(18px,2px)}
+ 100%{opacity:0;transform:translate(0)}
+}
+@keyframes downloadNoise{
+ 0%{opacity:0;transform:translate(0)}
+ 25%{opacity:.9;transform:translate(-20px,8px)}
+ 48%{opacity:.7;transform:translate(24px,-5px)}
+ 74%{opacity:.8;transform:translate(-12px,3px)}
+ 100%{opacity:0;transform:translate(0)}
+}
+
+/* PNG platform icons */
+.download-platform-icon{
+ width:42px!important;height:42px!important;object-fit:contain!important;
+ display:block!important;flex:none!important;
+ filter:drop-shadow(0 0 8px #b83cff55);
+}
+</style>
+
 </head>
 <body class="download-page">
+<div id="screen-glitch" aria-hidden="true"></div>
 <header class="nav">
   <a class="brand" href="index.html"><img src="assets/glitched-ar-logo.png" alt="Glitched AR logo"><span>GLITCHED <b>• AR</b></span></a>
-  <nav><a href="index.html">HOME</a><a href="index.html#games">GAMES</a><a href="index.html#about">ABOUT</a><a href="download.html">DOWNLOAD</a></nav>
+  <nav><a href="index.html">HOME</a><a href="index.html#games">GAMES</a><a href="index.html#about">ABOUT</a></nav>
 </header>
 <main>
 <section class="page-wrap">
@@ -21,20 +118,20 @@
 
   <div class="platforms">
     <article class="platform-card reveal visible">
-      <p class="eyebrow">01 / WINDOWS</p><h3>Coin Master for Windows</h3>
+      <div class="platform-head"><img class="download-platform-icon" src="assets/windows-logo.png" alt="Windows"><p class="eyebrow">01 / WINDOWS</p></div><h3>Coin Master for Windows</h3>
       <p>Download the ZIP package, extract it, then launch <b>coinMaster_Beta0.2.exe</b>. Keep the matching <b>.pck</b> file beside the EXE.</p>
       <a class="btn primary" href="downloads/Beta0.2.zip" download>DOWNLOAD WINDOWS ZIP →</a>
       <div class="warning"><b>Windows warning:</b> Microsoft Defender SmartScreen may say “Windows protected your PC” because the beta application is not recognized by Windows reputation services. Only continue if you trust the source.</div>
     </article>
     <article class="platform-card reveal visible">
-      <p class="eyebrow">02 / ANDROID</p><h3>Coin Master for Android</h3>
+      <div class="platform-head"><img class="download-platform-icon" src="assets/android-logo.png" alt="Android"><p class="eyebrow">02 / ANDROID</p></div><h3>Coin Master for Android</h3>
       <p>Download the APK and open it on your Android device. Android / Google Play Protect may recommend scanning an app installed outside Google Play.</p>
       <a class="btn primary" href="downloads/CoinMaster_Beta0.2.apk" download>DOWNLOAD ANDROID APK →</a>
       <div class="warning"><b>Android warning:</b> Play Protect can show an “App scan recommended” message for an APK it has not seen before.</div>
     </article>
   </div>
 
-  <div style="margin-top:24px"><a class="btn ghost" href="relics.html">VIEW RELICS →</a></div>
+  <div style="margin-top:24px"><a class="btn ghost relic-nav-glitch" href="relics.html">VIEW RELICS →</a></div>
 
   <div id="install" class="guide">
     <div class="section-heading reveal visible"><p class="eyebrow">03 / INSTALLATION</p><h2>STEP BY <span>STEP</span></h2></div>
@@ -76,4 +173,123 @@
 </main>
 <footer><img src="assets/glitched-ar-logo.png" alt=""><span>© 2026 Glitched AR Studios · Coin Master Beta 0.2</span></footer>
 <script src="script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="download-glitch-script">
+(function () {
+    const screen = document.getElementById("screen-glitch");
+
+    function playGlitch(done) {
+        if (!screen) {
+            if (done) done();
+            return;
+        }
+
+        screen.classList.remove("active");
+        void screen.offsetWidth;
+        screen.classList.add("active");
+
+        setTimeout(function () {
+            if (done) done();
+        }, 260);
+    }
+
+    // Every button and link on this page gets the full-screen glitch.
+    document.querySelectorAll("a, button").forEach(function (element) {
+
+        element.addEventListener("click", function (event) {
+
+            // Avoid double-triggering the same element.
+            if (element.dataset.glitchBusy === "1") {
+                return;
+            }
+
+            const href = element.getAttribute("href");
+
+            // Buttons without href: animate, but allow their normal JS handler.
+            if (element.tagName === "BUTTON") {
+                playGlitch();
+                return;
+            }
+
+            if (!href) {
+                return;
+            }
+
+            event.preventDefault();
+
+            // File downloads: glitch first, then perform the download.
+            if (element.hasAttribute("download")) {
+
+                element.dataset.glitchBusy = "1";
+
+                playGlitch(function () {
+                    const download = document.createElement("a");
+                    download.href = element.href;
+                    download.download =
+                        element.getAttribute("download") || "";
+
+                    document.body.appendChild(download);
+                    download.click();
+                    download.remove();
+
+                    element.dataset.glitchBusy = "0";
+                });
+
+                return;
+            }
+
+            // Same-page anchors.
+            if (href.charAt(0) === "#") {
+
+                playGlitch(function () {
+                    const target = document.querySelector(href);
+
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: "auto",
+                            block: "start"
+                        });
+                    } else {
+                        window.location.hash = href.substring(1);
+                    }
+                });
+
+                return;
+            }
+
+            // Normal page navigation.
+            element.dataset.glitchBusy = "1";
+
+            playGlitch(function () {
+                window.location.href = element.href;
+            });
+        }, true);
+    });
+})();
+</script>
+
 </body></html>

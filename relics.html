@@ -1,102 +1,364 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coin Master — Relics</title>
-<link rel="icon" href="assets/coin-master.ico">
-<link rel="stylesheet" href="style.css">
 <style>
-.relics-page .page-wrap{padding:90px 7vw 110px}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#050508;--text:#f5f2fa;--muted:#aaa7b8;--p:#a83cff;--p2:#d47cff;--line:#7429a344}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at 78% 18%,#8e2cff14,transparent 32rem),#050508;color:var(--text);font-family:Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.035;background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 4px)}
+a{color:inherit;text-decoration:none}
+.nav{height:76px;padding:0 7vw;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:30;background:#050508dd;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:14px;letter-spacing:2px}.brand img{width:42px;height:42px;object-fit:contain}.brand b{color:var(--p2)}
+.nav nav{display:flex;gap:30px}.nav nav a{font-size:10px;letter-spacing:2px;color:#aaa;transition:.25s}.nav nav a:hover{color:#fff;text-shadow:0 0 14px var(--p2)}
+.hero{min-height:calc(100vh - 76px);padding:7vh 7vw;display:grid;grid-template-columns:1fr .9fr;align-items:center;gap:4vw;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:40vw;height:40vw;right:5%;top:8%;border-radius:50%;background:var(--p);filter:blur(150px);opacity:.11}
+.scanlines{position:absolute;inset:0;background:linear-gradient(transparent 49.5%,#b04dff08 50%,transparent 50.5%);background-size:100% 8px;pointer-events:none}
+.eyebrow{color:var(--p2);font:800 10px Arial;letter-spacing:4px;margin-bottom:18px}
+.hero-copy{position:relative;z-index:2}.hero h1{font:900 clamp(48px,7.5vw,110px)/.86 Arial;letter-spacing:-5px}.hero h1.purple{color:var(--p2);text-shadow:0 0 30px #a43cff66}
+.tagline{max-width:580px;color:var(--muted);font-size:17px;line-height:1.7;margin:30px 0}
+.actions{display:flex;flex-wrap:wrap;gap:12px}.btn{min-height:46px;padding:0 22px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #8c32b6;font:800 10px Arial;letter-spacing:2px;transition:.25s}.btn.primary{background:var(--p);border-color:var(--p)}.btn:hover{transform:translateY(-3px);box-shadow:0 0 30px #a83cff55}.btn.ghost:hover{background:#a83cff14;border-color:var(--p2)}
+.hero-logo{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}.hero-logo img{width:min(500px,78%);filter:drop-shadow(0 0 35px #a83cff44);animation:float 5s ease-in-out infinite}.logo-ring{position:absolute;width:min(440px,70%);aspect-ratio:1;border:1px solid #a83cff25;border-radius:50%;box-shadow:0 0 70px #a83cff12;animation:spin 18s linear infinite}.logo-ring:after{content:"";position:absolute;inset:12%;border:1px dashed #d47cff20;border-radius:50%}
+@keyframes float{50%{transform:translateY(-12px)}}@keyframes spin{to{transform:rotate(360deg)}}
+.scroll-cue{position:absolute;bottom:25px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:3px;color:#777;z-index:2}.scroll-cue span{color:var(--p2);font-size:14px;margin-left:5px}
+.section{padding:115px 7vw;border-top:1px solid #ffffff0d}.section-heading h2{font:900 clamp(32px,5vw,64px)/1 Arial}.section-heading h2 span{color:var(--p2);text-shadow:0 0 25px #b044ff33}
+.game-card{margin-top:55px;display:grid;grid-template-columns:.9fr 1.1fr;min-height:440px;border:1px solid var(--line);background:#0d0d14;overflow:hidden;transition:.35s}.game-card:hover{border-color:#a83cff88;box-shadow:0 20px 80px #5c19a514}
+.game-art{min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(circle,#ffc61a20,transparent 30%),linear-gradient(135deg,#12111c,#08080d)}.grid{position:absolute;inset:-50%;background-image:linear-gradient(#a83cff12 1px,transparent 1px),linear-gradient(90deg,#a83cff12 1px,transparent 1px);background-size:50px 50px;transform:perspective(300px) rotateX(55deg);animation:gridmove 8s linear infinite}@keyframes gridmove{to{transform:perspective(300px) rotateX(55deg) translateY(50px)}}
+.coin-logo{width:min(240px,55%);max-height:230px;object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 0 28px #ffc61a55);animation:coinfloat 4s ease-in-out infinite}@keyframes coinfloat{50%{transform:translateY(-8px) rotate(-2deg)}}
+.game-art p{color:var(--p2);letter-spacing:5px;font-size:10px;margin-top:18px;position:relative;z-index:1}
+.game-info{padding:60px;display:flex;flex-direction:column;justify-content:center}.game-info h3{font-size:38px;margin-bottom:20px}.game-info>p:not(.eyebrow){color:var(--muted);line-height:1.8;margin-bottom:25px}.tags{display:flex;gap:8px;margin-bottom:28px}.tags span{border:1px solid var(--line);padding:7px 10px;color:var(--p2);font:800 8px Arial;letter-spacing:2px}
+.coming{text-align:center;padding:100px 20px 20px}.coming h3{font:900 clamp(25px,4vw,48px)/1.15 Arial}.coming h3 span{color:var(--p2)}
+.about-grid{max-width:900px;display:grid;grid-template-columns:1fr 1fr;gap:35px;margin-top:50px}.about-grid p{color:var(--muted);line-height:1.9;font-size:17px}
+.contact-text{color:var(--muted);margin:35px 0}.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.contact-card{border:1px solid var(--line);padding:28px;background:#0b0b12;transition:.3s}.contact-card:hover{border-color:var(--p2);transform:translateY(-5px);box-shadow:0 15px 45px #7e2bcc16}.contact-card small{display:block;color:var(--p2);font:800 8px Arial;letter-spacing:2px;margin-bottom:14px}.contact-card strong{font-size:13px;overflow-wrap:anywhere}.contact-card i{font-style:normal;color:var(--p2)}
+footer{border-top:1px solid #ffffff0d;padding:35px 7vw;display:flex;align-items:center;gap:20px;color:#777;font-size:9px;letter-spacing:1px}footer img{width:38px;height:38px;object-fit:contain}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}.reveal.visible{opacity:1;transform:none}.delay{transition-delay:.18s}
+.glitch-title{position:relative}.glitch-title.glitching:before,.glitch-title.glitching:after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden}.glitch-title.glitching:before{color:#00e5ff;transform:translate(3px,0);clip-path:inset(0 0 55% 0)}.glitch-title.glitching:after{color:#ff2bb5;transform:translate(-3px,0);clip-path:inset(55% 0 0 0)}
+@media(max-width:800px){.nav{padding:0 5vw}.brand span{display:none}.nav nav{gap:15px}.nav nav a{font-size:9px}.hero{grid-template-columns:1fr;padding-top:55px;text-align:center}.hero-logo{order:-1}.hero-logo img{width:min(320px,72%)}.logo-ring{width:260px}.hero .actions{justify-content:center}.tagline{font-size:15px}.section{padding:80px 5vw}.game-card,.about-grid,.contact-grid{grid-template-columns:1fr}.game-art{min-height:320px}.game-info{padding:38px 25px}.game-info .actions{justify-content:flex-start}.hero h1{letter-spacing:-2px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{transition:none}.hero-logo img,.logo-ring,.coin-logo,.grid{animation:none}}
+
+.game-art-shot{padding:0;min-height:420px;background:#08080d}
+.gameplay-preview{width:100%;height:100%;min-height:420px;object-fit:cover;display:block;opacity:.88}
+.art-overlay{position:absolute;inset:auto 0 0;padding:22px;background:linear-gradient(transparent,#050508dd);display:flex;justify-content:space-between;align-items:end}
+.art-overlay span{color:var(--p2);font:800 9px Arial;letter-spacing:3px}.art-overlay b{font-size:20px;letter-spacing:1px}
+.gameplay-section{background:radial-gradient(circle at 50% 10%,#a83cff0b,transparent 45%)}
+.media-grid{margin-top:50px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.media-card{margin:0;border:1px solid var(--line);background:#0a0a10;overflow:hidden;position:relative}
+.media-card img{display:block;width:100%;height:100%;min-height:330px;object-fit:cover}
+.media-card figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px;background:linear-gradient(transparent,#050508e8);display:flex;flex-direction:column;gap:4px}
+.media-card figcaption b{font-size:12px;letter-spacing:2px}.media-card figcaption span{color:#aaa7b8;font-size:12px}
+.download-strip{margin-top:18px;border:1px solid var(--line);background:#0d0d14;padding:30px;display:flex;justify-content:space-between;align-items:center;gap:30px}
+.download-strip h3{font-size:26px}.download-strip p:not(.eyebrow){color:var(--muted);margin-top:7px}
+.download-page .page-wrap{padding:90px 7vw}
+.platforms{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:45px}
+.platform-card{border:1px solid var(--line);background:#0b0b12;padding:32px}
+.platform-card h3{font-size:28px;margin:8px 0}.platform-card p{color:var(--muted);line-height:1.8}
+.warning{margin-top:20px;padding:16px;border:1px solid #6f562044;background:#1b160d;color:#c9bc9d;font-size:12px}
+.guide{margin-top:80px}.guide-tabs{display:flex;gap:10px;margin:28px 0}.guide-tab{border:1px solid var(--line);background:#0c0d14;color:#aaa;padding:12px 18px;font:800 10px Arial;letter-spacing:2px;cursor:pointer}.guide-tab.active{background:var(--p);color:#fff;border-color:var(--p)}
+.guide-panel{display:none}.guide-panel.active{display:block}.steps{display:grid;gap:16px}.step-card{display:grid;grid-template-columns:50px 1fr 380px;gap:20px;align-items:center;border:1px solid var(--line);background:#0b0b12;padding:18px}.step-number{width:44px;height:44px;display:grid;place-items:center;border:1px solid #a83cff55;color:var(--p2);font-weight:900}.step-card h4{font-size:18px;margin-bottom:6px}.step-card p{color:var(--muted);font-size:13px}.step-shot{width:100%;max-height:330px;object-fit:contain;background:#050508;border:1px solid #ffffff0b}
+.faq{margin-top:75px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.faq details{border:1px solid var(--line);background:#0b0b12;padding:18px}.faq summary{cursor:pointer;font-weight:800}.faq p{color:var(--muted);margin-top:10px}
+@media(max-width:800px){.media-grid,.platforms,.faq{grid-template-columns:1fr}.download-strip{flex-direction:column;align-items:flex-start}.step-card{grid-template-columns:44px 1fr}.step-shot{grid-column:1/-1}}
+
+
+/* RELICS PAGE */
+.relics-wrap{padding:90px 7vw 110px}
 .relic-intro{max-width:760px;color:var(--muted);line-height:1.8;margin-top:12px}
-.relic-platforms{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:48px}
-.relic-window{border:1px solid var(--line);background:#0b0b12;overflow:hidden}
-.relic-window-head{display:flex;justify-content:space-between;align-items:center;padding:25px 28px;cursor:pointer;user-select:none}
-.relic-window-head:hover{background:#ffffff03}
-.relic-window-title{display:flex;align-items:center;gap:13px}
-.relic-window-title .platform-icon{font-size:22px}
-.relic-window-title h3{font-size:21px;letter-spacing:1px}
-.relic-window-title small{display:block;color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:5px}
-.relic-toggle{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);font-size:18px;color:#aaa}
-.relic-window-body{display:none;border-top:1px solid var(--line);padding:12px}
+.relic-platforms{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
+.relic-window{border:1px solid #8e2cff55;background:linear-gradient(180deg,#090910,#05050a);box-shadow:inset 0 0 35px #8e2cff08;overflow:hidden}
+.relic-window-head{display:flex;align-items:center;justify-content:space-between;padding:30px 30px;cursor:pointer;user-select:none}
+.relic-window-head:hover,.relic-version-head:hover{background:#ffffff04}
+.relic-title{display:flex;align-items:center;gap:18px}
+.relic-title h3{font-size:28px;letter-spacing:.5px}
+.relic-title small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:7px}
+.relic-platform-icon{width:42px;height:42px;object-fit:contain;display:block;flex:none;color:#c95cff;filter:drop-shadow(0 0 8px #b83cff55)}
+.relic-toggle,.version-toggle{width:44px;height:44px;display:grid;place-items:center;border:1px solid #8e2cff55;color:#aaa;font-size:25px;line-height:1}
+.relic-window-body{display:none;border-top:1px solid #8e2cff44;padding:18px}
 .relic-window.open .relic-window-body{display:block}
-.relic-window.open .relic-toggle{transform:rotate(45deg)}
-.relic-version{border:1px solid var(--line);background:#090910;margin:8px;overflow:hidden}
-.relic-version-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;cursor:pointer}
-.relic-version-head:hover{background:#ffffff03}
-.relic-version-name{font-weight:800;letter-spacing:1px}
-.relic-version-meta{color:#777;font-size:10px;letter-spacing:1.5px;margin-top:5px}
-.relic-version-toggle{color:var(--p2);font-size:18px}
-.relic-version-content{display:none;padding:0 20px 20px;color:var(--muted);font-size:12px;line-height:1.7}
+.relic-version{border:1px solid #8e2cff44;background:#07070d;margin:12px;overflow:hidden}
+.relic-version-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;cursor:pointer}
+.relic-version-name{font-size:20px;font-weight:700}
+.relic-version-meta{color:var(--muted);font-size:11px;letter-spacing:1.4px;margin-top:5px}
+.relic-version-content{display:none;padding:0 24px 24px;color:var(--muted);font-size:13px;line-height:1.7}
 .relic-version.open .relic-version-content{display:block}
-.relic-version.open .relic-version-toggle{transform:rotate(45deg)}
-.relic-download{display:inline-block;margin-top:12px}
-.relic-note{margin:18px 8px 8px;padding:17px 20px;border:1px solid #ffffff0b;background:#0d0d14;color:#777;font-size:11px;line-height:1.7}
-.relic-back{margin-top:40px}
-@media(max-width:800px){.relic-platforms{grid-template-columns:1fr}.relics-page .page-wrap{padding:70px 5vw 90px}}
+.relic-download{display:inline-flex!important;align-items:center;justify-content:center;margin-top:14px;font-size:10px!important;letter-spacing:1.1px!important;word-spacing:0!important;white-space:nowrap!important;padding-left:20px!important;padding-right:20px!important}
+.relic-note{margin:18px 12px 12px;padding:18px 20px;border:1px solid #ffffff0b;background:#0d0d14;color:#777;font-size:11px;line-height:1.7}
+.relic-back{margin-top:42px}
+
+/* local expander glitch */
+.relic-window.window-glitch,.relic-version.window-glitch{animation:relicWindowGlitch .22s steps(2,end)}
+@keyframes relicWindowGlitch{
+0%{transform:translateX(0);filter:none}
+18%{transform:translateX(-7px);filter:contrast(1.5)}
+36%{transform:translateX(7px);filter:brightness(1.35) contrast(1.8)}
+54%{transform:translateX(-5px);filter:contrast(2)}
+72%{transform:translateX(4px);filter:brightness(1.15)}
+100%{transform:translateX(0);filter:none}
+}
+
+/* full-screen navigation glitch */
+#screen-glitch{position:fixed;inset:0;z-index:2147483647;pointer-events:none;opacity:0;overflow:hidden;background:transparent}
+#screen-glitch:before,#screen-glitch:after{content:"";position:absolute;inset:-8%;opacity:0}
+#screen-glitch:before{background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(255,255,255,.15) 6px,transparent 7px),linear-gradient(90deg,transparent 0 12%,rgba(190,65,255,.16) 12.2% 12.5%,transparent 12.8% 42%,rgba(0,220,255,.14) 42.2% 42.5%,transparent 42.8% 76%,rgba(255,45,185,.15) 76.2% 76.5%,transparent 76.8%)}
+#screen-glitch:after{background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(184,60,255,.18) 23px 25px,transparent 26px 46px);mix-blend-mode:screen}
+#screen-glitch.active{animation:fullGlitch .26s steps(2,end) forwards}
+#screen-glitch.active:before{animation:glitchSlices .26s steps(2,end) forwards}
+#screen-glitch.active:after{animation:glitchNoise .26s steps(2,end) forwards}
+@keyframes fullGlitch{
+0%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}
+10%{opacity:1;transform:translate(-12px,2px);clip-path:inset(5% 0 72% 0);filter:contrast(1.8)}
+22%{opacity:1;transform:translate(14px,-2px);clip-path:inset(28% 0 45% 0);filter:brightness(1.5) contrast(2)}
+37%{opacity:1;transform:translate(-9px,4px);clip-path:inset(67% 0 16% 0);filter:contrast(2.2)}
+52%{opacity:.95;transform:translate(8px,-3px);clip-path:inset(13% 0 57% 0);filter:brightness(1.3)}
+68%{opacity:.85;transform:translate(-5px,1px);clip-path:inset(48% 0 28% 0);filter:contrast(1.8)}
+82%{opacity:.55;transform:translate(4px,0);clip-path:inset(80% 0 5% 0)}
+100%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}
+}
+@keyframes glitchSlices{
+0%{opacity:0;transform:translate(0)}
+18%{opacity:1;transform:translate(22px,-7px)}
+42%{opacity:.8;transform:translate(-26px,4px)}
+65%{opacity:.9;transform:translate(18px,2px)}
+100%{opacity:0;transform:translate(0)}
+}
+@keyframes glitchNoise{
+0%{opacity:0;transform:translate(0)}
+25%{opacity:.9;transform:translate(-20px,8px)}
+48%{opacity:.7;transform:translate(24px,-5px)}
+74%{opacity:.8;transform:translate(-12px,3px)}
+100%{opacity:0;transform:translate(0)}
+}
+@media(max-width:800px){
+.relic-platforms{grid-template-columns:1fr}
+.relics-wrap{padding:70px 5vw 90px}
+.relic-window-head{padding:24px 20px}
+.relic-title h3{font-size:22px}
+}
+
 </style>
 </head>
-<body class="relics-page">
+<body>
+<div id="screen-glitch" aria-hidden="true"></div>
+
 <header class="nav">
-<a class="brand" href="index.html"><img src="assets/glitched-ar-logo.png" alt="Glitched AR logo"><span>GLITCHED <b>• AR</b></span></a>
-<nav><a href="index.html">HOME</a><a href="index.html#games">GAMES</a><a href="index.html#about">ABOUT</a></nav>
+  <a class="brand" href="index.html">
+    <img src="assets/glitched-ar-logo.png" alt="Glitched AR logo">
+    <span>GLITCHED <b>• AR</b></span>
+  </a>
+  <nav>
+    <a href="index.html">HOME</a>
+    <a href="index.html#games">GAMES</a>
+    <a href="index.html#about">ABOUT</a>
+    <a href="download.html">DOWNLOAD</a>
+  </nav>
 </header>
+
 <main>
-<section class="page-wrap">
-<div class="section-heading reveal visible">
-<p class="eyebrow">COIN MASTER // ARCHIVE</p>
-<h2>THE <span>RELICS</span></h2>
-<p class="relic-intro">Previous Coin Master builds preserved by Glitched AR. Windows and Android releases are archived independently, so their version numbers do not need to match.</p>
-</div>
-<div class="relic-platforms">
+<section class="relics-wrap">
+  <div class="section-heading reveal visible">
+    <p class="eyebrow">COIN MASTER // ARCHIVE</p>
+    <h2>THE <span>RELICS</span></h2>
+    <p class="relic-intro">
+      Previous Coin Master builds preserved by Glitched AR.
+      Windows and Android releases are archived independently,
+      so their version numbers do not need to match.
+    </p>
+  </div>
 
-<article class="relic-window reveal visible open">
-<div class="relic-window-head">
-<div class="relic-window-title"><span class="platform-icon">▣</span><div><h3>WINDOWS</h3><small>DESKTOP BUILDS</small></div></div>
-<span class="relic-toggle">+</span>
-</div>
-<div class="relic-window-body">
-<div class="relic-version">
-<div class="relic-version-head"><div><div class="relic-version-name">BETA 0.1</div><div class="relic-version-meta">PREVIOUS WINDOWS BUILD</div></div><span class="relic-version-toggle">+</span></div>
-<div class="relic-version-content">Previous Windows build of Coin Master.<br>
-<a class="btn ghost relic-download" href="downloads/Beta0.1.zip" download>DOWNLOAD EXE / ZIP →</a>
-</div>
-</div>
-<div class="relic-note">Add future Windows builds here. Each version can have its own independent release name.</div>
-</div>
-</article>
+  <div class="relic-platforms">
 
-<article class="relic-window reveal visible open">
-<div class="relic-window-head">
-<div class="relic-window-title"><span class="platform-icon">▤</span><div><h3>ANDROID</h3><small>MOBILE BUILDS</small></div></div>
-<span class="relic-toggle">+</span>
-</div>
-<div class="relic-window-body">
-<div class="relic-version">
-<div class="relic-version-head"><div><div class="relic-version-name">BETA 0.2.3</div><div class="relic-version-meta">PREVIOUS ANDROID BUILD</div></div><span class="relic-version-toggle">+</span></div>
-<div class="relic-version-content">Previous Android build of Coin Master.<br>
-<a class="btn ghost relic-download" href="downloads/coinMaster_Beta0.2.3.apk" download>DOWNLOAD APK →</a>
-</div>
-</div>
-<div class="relic-note">Add future Android builds here. Android version numbers are independent from Windows releases.</div>
-</div>
-</article>
+    <article class="relic-window open">
+      <div class="relic-window-head" role="button" tabindex="0" aria-expanded="true">
+        <div class="relic-title">
+          <img class="relic-platform-icon" src="assets/windows-logo.png" alt="Windows">
+          <div>
+            <h3>WINDOWS</h3>
+            <small>DESKTOP BUILDS</small>
+          </div>
+        </div>
+        <span class="relic-toggle" aria-hidden="true">×</span>
+      </div>
 
-</div>
-<div class="relic-back"><a class="btn primary" href="download.html">← BACK TO DOWNLOADS</a></div>
+      <div class="relic-window-body">
+        <div class="relic-version">
+          <div class="relic-version-head" role="button" tabindex="0" aria-expanded="false">
+            <div>
+              <div class="relic-version-name">BETA 0.1</div>
+              <div class="relic-version-meta">PREVIOUS WINDOWS BUILD</div>
+            </div>
+            <span class="version-toggle" aria-hidden="true">+</span>
+          </div>
+          <div class="relic-version-content">
+            Previous Windows build of Coin Master.
+            <br>
+            <a class="btn ghost relic-download" href="downloads/Beta0.1.zip" download>
+              DOWNLOAD WINDOWS →
+            </a>
+          </div>
+        </div>
+        <div class="relic-note">Older Windows builds are kept here independently from Android releases.</div>
+      </div>
+    </article>
+
+    <article class="relic-window open">
+      <div class="relic-window-head" role="button" tabindex="0" aria-expanded="true">
+        <div class="relic-title">
+          <img class="relic-platform-icon" src="assets/android-logo.png" alt="Android">
+          </span>
+          <div>
+            <h3>ANDROID</h3>
+            <small>MOBILE BUILDS</small>
+          </div>
+        </div>
+        <span class="relic-toggle" aria-hidden="true">×</span>
+      </div>
+
+      <div class="relic-window-body">
+        <div class="relic-version">
+          <div class="relic-version-head" role="button" tabindex="0" aria-expanded="false">
+            <div>
+              <div class="relic-version-name">BETA 0.2.3</div>
+              <div class="relic-version-meta">PREVIOUS ANDROID BUILD</div>
+            </div>
+            <span class="version-toggle" aria-hidden="true">+</span>
+          </div>
+          <div class="relic-version-content">
+            Previous Android build of Coin Master.
+            <br>
+            <a class="btn ghost relic-download" href="downloads/coinMaster_Beta0.2.3.apk" download>
+              DOWNLOAD APK →
+            </a>
+          </div>
+        </div>
+        <div class="relic-note">Older Android builds are kept here independently from Windows releases.</div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="relic-back">
+    <a class="btn primary" href="download.html">← BACK TO DOWNLOADS</a>
+  </div>
 </section>
 </main>
-<footer><img src="assets/glitched-ar-logo.png" alt=""><span>© 2026 Glitched AR Studios · Coin Master</span></footer>
+
+<footer>
+  <img src="assets/glitched-ar-logo.png" alt="">
+  <span>© 2026 Glitched AR Studios · Coin Master</span>
+</footer>
+
 <script>
-document.querySelectorAll(".relic-window-head").forEach(h=>{
-  h.addEventListener("click",()=>h.parentElement.classList.toggle("open"));
-});
-document.querySelectorAll(".relic-version-head").forEach(h=>{
-  h.addEventListener("click",e=>{
-    e.stopPropagation();
-    h.parentElement.classList.toggle("open");
+(function () {
+  var screen = document.getElementById("screen-glitch");
+
+  function playScreenGlitch(done) {
+    if (!screen) {
+      if (done) done();
+      return;
+    }
+    screen.classList.remove("active");
+    void screen.offsetWidth;
+    screen.classList.add("active");
+    window.setTimeout(function () {
+      if (done) done();
+    }, 260);
+  }
+
+  function playLocalGlitch(box) {
+    box.classList.remove("window-glitch");
+    void box.offsetWidth;
+    box.classList.add("window-glitch");
+    window.setTimeout(function () {
+      box.classList.remove("window-glitch");
+    }, 220);
+  }
+
+  function togglePlatform(head) {
+    var box = head.parentElement;
+    var toggle = head.querySelector(".relic-toggle");
+    playLocalGlitch(box);
+    var open = box.classList.toggle("open");
+    head.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.textContent = open ? "×" : "+";
+  }
+
+  function toggleVersion(head) {
+    var box = head.parentElement;
+    var toggle = head.querySelector(".version-toggle");
+    playLocalGlitch(box);
+    var open = box.classList.toggle("open");
+    head.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.textContent = open ? "×" : "+";
+  }
+
+  document.querySelectorAll(".relic-window-head").forEach(function (head) {
+    head.addEventListener("click", function () { togglePlatform(head); });
+    head.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        togglePlatform(head);
+      }
+    });
   });
-});
+
+  document.querySelectorAll(".relic-version-head").forEach(function (head) {
+    head.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleVersion(head);
+    });
+    head.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleVersion(head);
+      }
+    });
+  });
+
+  /* Every normal navigation/button gets the full-screen glitch.
+     Downloads also glitch first, then the browser performs the download. */
+  document.querySelectorAll("a, button").forEach(function (el) {
+    if (el.closest(".relic-window-head") || el.closest(".relic-version-head")) return;
+
+    el.addEventListener("click", function (e) {
+      if (el.tagName === "BUTTON") {
+        if (e.defaultPrevented) return;
+        playScreenGlitch();
+        return;
+      }
+
+      var href = el.getAttribute("href");
+      if (!href || href.toLowerCase().indexOf("javascript:") === 0) return;
+
+      if (el.hasAttribute("download")) {
+        e.preventDefault();
+        playScreenGlitch(function () {
+          var a = document.createElement("a");
+          a.href = el.href;
+          a.download = el.getAttribute("download") || "";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        });
+        return;
+      }
+
+      e.preventDefault();
+
+      if (href.charAt(0) === "#") {
+        playScreenGlitch(function () {
+          var target = document.querySelector(href);
+          if (target) target.scrollIntoView({behavior:"auto", block:"start"});
+          else window.location.hash = href.substring(1);
+        });
+      } else {
+        playScreenGlitch(function () {
+          window.location.href = el.href;
+        });
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>

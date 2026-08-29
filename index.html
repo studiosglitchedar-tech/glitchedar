@@ -7,8 +7,47 @@
 <title>Glitched AR Studios</title>
 <link rel="icon" href="assets/glitched-ar-logo.png">
 <link rel="stylesheet" href="style.css">
+<style>
+/* === GLITCHED AR visual polish === */
+:root{--bg:#030307;--panel:#07070d;--panel2:#0a0a12;--text:#f5f3fa;--muted:#a9a5b8;--p:#b83cff;--p2:#d875ff;--line:#8e2cff55}
+body{background:radial-gradient(circle at 78% 18%,#8e2cff18,transparent 34rem),#030307}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:19;opacity:.045;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.22) 4px,transparent 5px);mix-blend-mode:screen}
+.nav{background:rgba(3,3,7,.88);border-bottom-color:#8e2cff44}
+.nav nav a{position:relative}.nav nav a:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:2px;background:var(--p2);transform:scaleX(0);transform-origin:center;box-shadow:0 0 12px var(--p2);transition:.2s}.nav nav a:hover:after{transform:scaleX(1)}
+.btn{letter-spacing:1.2px;white-space:nowrap;line-height:1;min-width:0}
+.btn.primary{box-shadow:0 0 0 transparent}.btn:hover{box-shadow:0 0 28px #a83cff44}
+.platform-card,.relic-window,.game-card,.contact-card,.media-card,.download-strip,.step-card{background:linear-gradient(180deg,#090910,#05050a);border-color:#8e2cff4d;box-shadow:inset 0 0 35px #8e2cff08}
+.platform-card h3,.relic-title h3,.game-info h3{letter-spacing:.5px}
+/* Windows / Android symbols: clean vector-like CSS icons */
+.platform-card .platform-icon,.relic-platform-icon{width:42px;height:42px;display:inline-grid;place-items:center;flex:none;color:#c95cff;filter:drop-shadow(0 0 8px #b83cff55)}
+.windows-icon{display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;padding:4px}.windows-icon i{display:block;background:currentColor}
+.android-icon{position:relative}.android-icon:before{content:"";width:25px;height:20px;border-radius:7px 7px 4px 4px;background:currentColor;display:block}.android-icon:after{content:"••";position:absolute;top:12px;left:13px;color:#07070d;font-size:11px;letter-spacing:4px;line-height:1}
+.android-icon .antenna{position:absolute;top:5px;left:10px;width:8px;height:1px;background:currentColor;transform:rotate(-35deg);box-shadow:15px 6px 0 currentColor}
+.platform-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}.platform-head .eyebrow{margin:0}
+/* Fix oversized/over-spaced download labels */
+.platform-card .btn,.relic-download{font-size:10px;letter-spacing:1.1px;word-spacing:0;text-transform:none;padding-left:20px;padding-right:20px}
+/* Full-screen glitch transition: no loading bar */
+#screen-glitch{position:fixed;inset:0;z-index:2147483647;pointer-events:none;opacity:0;overflow:hidden;background:transparent}
+#screen-glitch:before,#screen-glitch:after{content:"";position:absolute;inset:-8%;opacity:0}
+#screen-glitch:before{background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(255,255,255,.15) 6px,transparent 7px),linear-gradient(90deg,transparent 0 12%,rgba(190,65,255,.16) 12.2% 12.5%,transparent 12.8% 42%,rgba(0,220,255,.14) 42.2% 42.5%,transparent 42.8% 76%,rgba(255,45,185,.15) 76.2% 76.5%,transparent 76.8%)}
+#screen-glitch:after{background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(184,60,255,.18) 23px 25px,transparent 26px 46px);mix-blend-mode:screen}
+#screen-glitch.active{animation:fullGlitch .24s steps(2,end) forwards}
+#screen-glitch.active:before{animation:glitchSlices .24s steps(2,end) forwards}
+#screen-glitch.active:after{animation:glitchNoise .24s steps(2,end) forwards}
+@keyframes fullGlitch{0%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}10%{opacity:1;transform:translate(-12px,2px);clip-path:inset(5% 0 72% 0);filter:contrast(1.8)}22%{opacity:1;transform:translate(14px,-2px);clip-path:inset(28% 0 45% 0);filter:brightness(1.5) contrast(2)}37%{opacity:1;transform:translate(-9px,4px);clip-path:inset(67% 0 16% 0);filter:contrast(2.2)}52%{opacity:.95;transform:translate(8px,-3px);clip-path:inset(13% 0 57% 0);filter:brightness(1.3)}68%{opacity:.85;transform:translate(-5px,1px);clip-path:inset(48% 0 28% 0);filter:contrast(1.8)}82%{opacity:.55;transform:translate(4px,0);clip-path:inset(80% 0 5% 0)}100%{opacity:0;transform:translate(0);clip-path:inset(0);filter:none}}
+@keyframes glitchSlices{0%{opacity:0;transform:translate(0)}18%{opacity:1;transform:translate(22px,-7px)}42%{opacity:.8;transform:translate(-26px,4px)}65%{opacity:.9;transform:translate(18px,2px)}100%{opacity:0;transform:translate(0)}}
+@keyframes glitchNoise{0%{opacity:0;transform:translate(0)}25%{opacity:.9;transform:translate(-20px,8px)}48%{opacity:.7;transform:translate(24px,-5px)}74%{opacity:.8;transform:translate(-12px,3px)}100%{opacity:0;transform:translate(0)}}
+/* Local RELICS expander glitch remains separate from full-screen transition */
+.relic-window.window-glitch,.relic-version.window-glitch{animation:relicWindowGlitch .18s steps(2,end)}
+@keyframes relicWindowGlitch{0%{transform:translateX(0);filter:none}20%{transform:translateX(-5px);filter:contrast(1.5)}40%{transform:translateX(5px);filter:contrast(1.8)}60%{transform:translateX(-3px);filter:contrast(1.3)}80%{transform:translateX(3px);filter:contrast(1.6)}100%{transform:translateX(0);filter:none}}
+@media(max-width:800px){.platform-head{align-items:flex-start}.platform-card .btn,.relic-download{font-size:9px;letter-spacing:.8px;padding-left:15px;padding-right:15px}}
+
 </head>
+</style>
 <body>
+<div id="screen-glitch"></div>
+
+
 <div class="cursor-glow"></div>
 
 <header class="nav">
@@ -63,9 +102,7 @@
       <p>A fast-paced coin collecting challenge. Collect the coins, beat the timer, and chase a higher score.</p>
       <div class="tags"><span>ARCADE</span><span>CASUAL</span><span>BETA</span></div>
       <div class="actions">
-        <p class="web-note">★ Stars are currently unavailable in the web version.</p>
-
-        <a class="btn primary" href="game/coinMaster_Beta0.2.html">PLAY IN BROWSER</a>
+        <a class="btn primary" href="#" onclick="event.preventDefault(); const ev=event; screenGlitch(function(){ soon(ev); });">PLAY IN BROWSER</a>
         <a class="btn ghost" href="download.html">WINDOWS / APK DOWNLOAD</a>
       </div>
     </div>
@@ -102,8 +139,7 @@
       <small>INSTAGRAM</small><strong>@glitched_.ar <i>→</i></strong>
     </a>
     <a class="contact-card reveal" href="mailto:studiosglitchedar@gmail.com">
-     <small>EMAIL</small>
-     <strong>studiosglitchedar@gmail.com <i>→</i></strong>
+      <small>EMAIL</small><strong>studiosglitchedar@gmail.com <i>→</i></strong>
     </a>
   </div>
 </section>
@@ -114,5 +150,104 @@
   <span>© 2026 Glitched AR Studios. All rights reserved.</span>
 </footer>
 <script src="script.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script id="unified-glitch-interactions">
+(function(){
+  function screenGlitch(done){
+    var g=document.getElementById('screen-glitch');
+    if(!g){ if(done) done(); return; }
+    g.classList.remove('active'); void g.offsetWidth; g.classList.add('active');
+    setTimeout(function(){ if(done) done(); },240);
+  }
+
+  function localGlitch(el){
+    el.classList.remove('window-glitch'); void el.offsetWidth; el.classList.add('window-glitch');
+    setTimeout(function(){el.classList.remove('window-glitch');},180);
+  }
+
+  /* RELICS expand/collapse: local window glitch only, X when open. */
+  document.querySelectorAll('.relic-window-head').forEach(function(head){
+    head.addEventListener('click',function(){
+      var box=head.parentElement, toggle=head.querySelector('.relic-toggle');
+      localGlitch(box);
+      box.classList.toggle('open');
+      if(toggle) toggle.textContent=box.classList.contains('open')?'×':'+';
+    });
+  });
+  document.querySelectorAll('.relic-version-head').forEach(function(head){
+    head.addEventListener('click',function(e){
+      e.stopPropagation();
+      var box=head.parentElement, toggle=head.querySelector('.version-toggle');
+      localGlitch(box);
+      box.classList.toggle('open');
+      if(toggle) toggle.textContent=box.classList.contains('open')?'×':'+';
+    });
+  });
+
+  /* Every button-like control gets the full-screen glitch. */
+  document.querySelectorAll('button, a.btn, a.contact-card, a.brand, nav a').forEach(function(el){
+    el.addEventListener('click',function(e){
+      if(el.closest('.relic-window-head') || el.closest('.relic-version-head')) return;
+      if(el.dataset.glitchBypass==='1'){ el.dataset.glitchBypass=''; return; }
+
+      /* Let existing JS (e.g. soon() or guide tabs) perform its action,
+         while the glitch plays over the screen. */
+      if(el.tagName==='BUTTON'){
+        if(e.defaultPrevented) return;
+        screenGlitch();
+        return;
+      }
+
+      var href=el.getAttribute('href');
+      if(!href || href.toLowerCase().startsWith('javascript:')) return;
+
+      /* Same-page anchors: glitch, then scroll. */
+      if(href.charAt(0)==='#'){
+        if(e.defaultPrevented) return;
+        e.preventDefault();
+        screenGlitch(function(){
+          var target=document.querySelector(href);
+          if(target) target.scrollIntoView({behavior:'auto',block:'start'});
+          else window.location.hash=href.substring(1);
+        });
+        return;
+      }
+
+      /* Actual downloads: glitch first, then trigger the original download. */
+      if(el.hasAttribute('download')){
+        if(e.defaultPrevented) return;
+        e.preventDefault();
+        screenGlitch(function(){
+          el.dataset.glitchBypass='1';
+          el.click();
+        });
+        return;
+      }
+
+      /* External/new-tab links keep their native behavior, but get the animation. */
+      if(el.target==='_blank'){
+        if(e.defaultPrevented) return;
+        screenGlitch();
+        return;
+      }
+
+      /* Normal page navigation. */
+      if(e.defaultPrevented) return;
+      e.preventDefault();
+      screenGlitch(function(){window.location.href=el.href;});
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
