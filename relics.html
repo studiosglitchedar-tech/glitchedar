@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coin Master — Relics</title>
+<link rel="icon" href="assets/coin-master.ico">
+<link rel="stylesheet" href="style.css">
+<style>
+.relics-page .page-wrap{padding:90px 7vw 110px}
+.relic-intro{max-width:760px;color:var(--muted);line-height:1.8;margin-top:12px}
+.relic-platforms{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:48px}
+.relic-window{border:1px solid var(--line);background:#0b0b12;overflow:hidden}
+.relic-window-head{display:flex;justify-content:space-between;align-items:center;padding:25px 28px;cursor:pointer;user-select:none}
+.relic-window-head:hover{background:#ffffff03}
+.relic-window-title{display:flex;align-items:center;gap:13px}
+.relic-window-title .platform-icon{font-size:22px}
+.relic-window-title h3{font-size:21px;letter-spacing:1px}
+.relic-window-title small{display:block;color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:5px}
+.relic-toggle{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);font-size:18px;color:#aaa}
+.relic-window-body{display:none;border-top:1px solid var(--line);padding:12px}
+.relic-window.open .relic-window-body{display:block}
+.relic-window.open .relic-toggle{transform:rotate(45deg)}
+.relic-version{border:1px solid var(--line);background:#090910;margin:8px;overflow:hidden}
+.relic-version-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;cursor:pointer}
+.relic-version-head:hover{background:#ffffff03}
+.relic-version-name{font-weight:800;letter-spacing:1px}
+.relic-version-meta{color:#777;font-size:10px;letter-spacing:1.5px;margin-top:5px}
+.relic-version-toggle{color:var(--p2);font-size:18px}
+.relic-version-content{display:none;padding:0 20px 20px;color:var(--muted);font-size:12px;line-height:1.7}
+.relic-version.open .relic-version-content{display:block}
+.relic-version.open .relic-version-toggle{transform:rotate(45deg)}
+.relic-download{display:inline-block;margin-top:12px}
+.relic-note{margin:18px 8px 8px;padding:17px 20px;border:1px solid #ffffff0b;background:#0d0d14;color:#777;font-size:11px;line-height:1.7}
+.relic-back{margin-top:40px}
+@media(max-width:800px){.relic-platforms{grid-template-columns:1fr}.relics-page .page-wrap{padding:70px 5vw 90px}}
+</style>
+</head>
+<body class="relics-page">
+<header class="nav">
+<a class="brand" href="index.html"><img src="assets/glitched-ar-logo.png" alt="Glitched AR logo"><span>GLITCHED <b>• AR</b></span></a>
+<nav><a href="index.html">HOME</a><a href="index.html#games">GAMES</a><a href="index.html#about">ABOUT</a></nav>
+</header>
+<main>
+<section class="page-wrap">
+<div class="section-heading reveal visible">
+<p class="eyebrow">COIN MASTER // ARCHIVE</p>
+<h2>THE <span>RELICS</span></h2>
+<p class="relic-intro">Previous Coin Master builds preserved by Glitched AR. Windows and Android releases are archived independently, so their version numbers do not need to match.</p>
+</div>
+<div class="relic-platforms">
+
+<article class="relic-window reveal visible open">
+<div class="relic-window-head">
+<div class="relic-window-title"><span class="platform-icon">▣</span><div><h3>WINDOWS</h3><small>DESKTOP BUILDS</small></div></div>
+<span class="relic-toggle">+</span>
+</div>
+<div class="relic-window-body">
+<div class="relic-version">
+<div class="relic-version-head"><div><div class="relic-version-name">BETA 0.2.3</div><div class="relic-version-meta">PREVIOUS WINDOWS BUILD</div></div><span class="relic-version-toggle">+</span></div>
+<div class="relic-version-content">Previous Windows build of Coin Master.<br>
+<a class="btn ghost relic-download" href="downloads/Beta0.2.3_Windows.zip" download>DOWNLOAD EXE / ZIP →</a>
+</div>
+</div>
+<div class="relic-note">Add future Windows builds here. Each version can have its own independent release name.</div>
+</div>
+</article>
+
+<article class="relic-window reveal visible">
+<div class="relic-window-head">
+<div class="relic-window-title"><span class="platform-icon">▤</span><div><h3>ANDROID</h3><small>MOBILE BUILDS</small></div></div>
+<span class="relic-toggle">+</span>
+</div>
+<div class="relic-window-body">
+<div class="relic-version">
+<div class="relic-version-head"><div><div class="relic-version-name">BETA 0.2.3</div><div class="relic-version-meta">PREVIOUS ANDROID BUILD</div></div><span class="relic-version-toggle">+</span></div>
+<div class="relic-version-content">Previous Android build of Coin Master.<br>
+<a class="btn ghost relic-download" href="downloads/coinMaster_Beta0.2.3.apk" download>DOWNLOAD APK →</a>
+</div>
+</div>
+<div class="relic-note">Add future Android builds here. Android version numbers are independent from Windows releases.</div>
+</div>
+</article>
+
+</div>
+<div class="relic-back"><a class="btn primary" href="download.html">← BACK TO DOWNLOADS</a></div>
+</section>
+</main>
+<footer><img src="assets/glitched-ar-logo.png" alt=""><span>© 2026 Glitched AR Studios · Coin Master</span></footer>
+<script>
+document.querySelectorAll(".relic-window-head").forEach(h=>{
+  h.addEventListener("click",()=>h.parentElement.classList.toggle("open"));
+});
+document.querySelectorAll(".relic-version-head").forEach(h=>{
+  h.addEventListener("click",e=>{
+    e.stopPropagation();
+    h.parentElement.classList.toggle("open");
+  });
+});
+</script>
+</body>
+</html>
