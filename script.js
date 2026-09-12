@@ -50,7 +50,7 @@ const CHRONICLE_LATEST = [
     id: "002",
     protocol: "GEARSHIFT",
     title: "SYSTEM STATUS — TEMPORARILY OFFLINE",
-    body: "Development on Echoes of the Wild is currently on hold while the development gear undergoes an upgrade. The signal isn't lost. The system is simply waiting for better hardware. Development will resume once the new setup is operational.",
+    body: "Development on BETA 0.3 is currently on hold while the development gear undergoes an upgrade. The signal isn't lost. The system is simply waiting for better hardware. Development will resume once the new setup is operational.",
     status: ["STATUS: STANDBY", "SIGNAL: INTERRUPTED", "RESUMPTION: PENDING GEAR UPGRADE"]
   }
 ];
